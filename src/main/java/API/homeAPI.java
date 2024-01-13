@@ -18,9 +18,7 @@ import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @Path("/home")
