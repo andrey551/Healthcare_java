@@ -1,5 +1,6 @@
 package Utils;
 
+import Model.Account;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -22,6 +23,7 @@ public class jwtHandler {
                 .withSubject("Authorized account")
                 .withClaim("username", user.getUsername())
                 .withClaim("password", user.getPassword())
+                .withClaim("ID", user.getId())
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + 555500000L))
                 .withJWTId(UUID.randomUUID().toString())
@@ -38,8 +40,11 @@ public class jwtHandler {
                     .compareTo(new Time(System.currentTimeMillis())) > 0) {
                 String username = decodedJWT.getClaim("username").toString();
                 String password = decodedJWT.getClaim("password").toString();
-                System.out.println("username: " + username + " password: " + password);
-                return new RawAccount(username.substring(1, username.length() - 1), password.substring(1, password.length() - 1));
+                String  id = decodedJWT.getClaim("id").toString();
+                return new RawAccount(username.substring(1, username.length() - 1),
+                        password.substring(1, password.length() - 1),
+                        Long.valueOf(id.substring(1, id.length() - 1))
+                        );
             }
         } catch (JWTVerificationException e) {
             System.out.println(e.getMessage());

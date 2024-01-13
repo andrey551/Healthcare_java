@@ -5,6 +5,8 @@ import java.sql.Time;
 public class RawLocation {
     private String name;
     private String address;
+
+    private String avatar;
     private Float longitude;
     private Float latitude;
 
@@ -14,22 +16,28 @@ public class RawLocation {
     private Float rating;
     private Long passengers;
 
+    private String type;
+
     public RawLocation(String name,
                        String address,
+                       String avatar,
                        Float longitude,
                        Float latitude,
                        Time open,
                        Time close,
                        Float rating,
-                       Long passengers) {
+                       Long passengers,
+                       String type) {
         this.name = name;
         this.address = address;
+        this.avatar = avatar;
         this.open = open;
         this.close = close;
         this.rating = rating;
         this.passengers = passengers;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.type = type;
     }
 
     public RawLocation() {
@@ -98,5 +106,21 @@ public class RawLocation {
 
     public void setOpen(Time open) {
         this.open = open;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

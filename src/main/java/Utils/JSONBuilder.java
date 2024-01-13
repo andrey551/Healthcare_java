@@ -3,12 +3,9 @@ package Utils;
 import Model.Location;
 import Model.Record;
 import Model.User;
+import Raw.*;
 import jakarta.json.*;
 import jakarta.json.stream.JsonParsingException;
-import Raw.RawAccount;
-import Raw.RawChat;
-import Raw.RawMessage;
-import Raw.Token;
 
 import java.io.StringReader;
 import java.util.List;
@@ -65,24 +62,25 @@ public class JSONBuilder {
         JsonObject obj = reader.readObject();
 
         return new RawAccount(obj.getString("username"),
-                obj.getString("password"));
+                obj.getString("password"), Long.valueOf(obj.getString("id")));
     }
 
-    public static String UserJson(User user, Location location) {
+    public static String UserJson(User user) {
         JsonObject ret = Json.createObjectBuilder()
                 .add("name", user.getName())
                 .add("avatar", user.getAvatar())
                 .add("age", user.getAge())
                 .add("height", user.getHeight())
-                .add("address", location.getAddress())
-                .add("longitude", location.getLongitude())
-                .add("latitude", location.getLatitude())
+                .add("address", user.getAddress())
+                .add("longitude", user.getLongitude())
+                .add("latitude", user.getLatitude())
                 .build();
         return ret.toString();
     }
 
     public static JsonObject recordJson(Record record) {
-        JsonObject ret = Json.createObjectBuilder()
+
+        return Json.createObjectBuilder()
                 .add("time", record.getTime().toString())
                 .add("weight", record.getWeight())
                 .add("height", record.getHeight())
@@ -90,8 +88,6 @@ public class JSONBuilder {
                 .add("cholesterol", record.getCholesterol())
                 .add("heart_beat", record.getHeartBeat())
                 .build();
-
-        return ret;
     }
 
     public static String recordsJson(List<Record> records) {
@@ -102,6 +98,30 @@ public class JSONBuilder {
 
         return ret.build().toString();
 
+    }
+
+    public static JsonObject locationJson(RawLocation raw) {
+        return Json.createObjectBuilder()
+                .add("name", raw.getName())
+                .add("address", raw.getAddress())
+                .add("avatar", raw.getAvatar())
+                .add("longitude", raw.getLongitude())
+                .add("latitude", raw.getLatitude())
+                .add("open", raw.getOpen().toString())
+                .add("close", raw.getClose().toString())
+                .add("rating", raw.getRating())
+                .add("passengers", raw.getPassengers())
+                .add("type", raw.getType())
+                .build();
+    }
+
+    public static String locationsJson(List<RawLocation> raws) {
+        JsonArrayBuilder ret = Json.createArrayBuilder();
+        for(RawLocation i : raws) {
+            ret.add(locationJson(i));
+        }
+
+        return ret.build().toString();
     }
 
 }

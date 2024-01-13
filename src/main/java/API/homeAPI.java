@@ -47,19 +47,14 @@ public class homeAPI {
         if(ret == null)
             return Response.status(400).entity("Session timeout!").build();
 
-        if(accountTableRemote.checkAccount(ret)) {
-            Long id = accountTableRemote.getIdByUsernameAndPassword(ret);
-            System.out.println(id);
-            User user = userTableRemote.getUserByAccountId(id);
-            System.out.println(user);
-            if(user != null) {
-                Location location = locationTableRemote.getLocationById(user.getLocation_id());
-                return Response
-                        .status(200)
-                        .entity(JSONBuilder
-                                .UserJson(user, location))
-                        .build();
-            }
+        User user = userTableRemote.getUserByAccountId(ret.getId());
+        System.out.println(user);
+        if(user != null) {
+            return Response
+                    .status(200)
+                    .entity(JSONBuilder
+                            .UserJson(user))
+                    .build();
         }
         return Response.status(403).build();
     }
@@ -76,17 +71,14 @@ public class homeAPI {
         RawAccount ret = jwtHandler.verify(headerList.get(0));
         if(ret == null)
             return Response.status(400).entity("Session timeout!").build();
-        if(accountTableRemote.checkAccount(ret)) {
-            Long id = accountTableRemote.getIdByUsernameAndPassword(ret);
-            User user = userTableRemote.getUserByAccountId(id);
-            if(user != null) {
-                List<Record> records = recordTableRemote.getRecordByUserId(user.getId());
-                return Response
-                        .status(200)
-                        .entity(JSONBuilder
-                                .recordsJson(records))
-                        .build();
-            }
+        User user = userTableRemote.getUserByAccountId(ret.getId());
+        if(user != null) {
+            List<Record> records = recordTableRemote.getRecordByUserId(user.getId());
+            return Response
+                    .status(200)
+                    .entity(JSONBuilder
+                            .recordsJson(records))
+                    .build();
         }
         return Response.status(403).build();
     }
@@ -105,13 +97,10 @@ public class homeAPI {
         RawAccount ret = jwtHandler.verify(headerList.get(0));
         if(ret == null)
             return Response.status(400).entity("Session timeout!").build();
-        if(accountTableRemote.checkAccount(ret)) {
-            Long id = accountTableRemote.getIdByUsernameAndPassword(ret);
-            User user = userTableRemote.getUserByAccountId(id);
-            if(user != null) {
-                Long re = recordTableRemote.deleteRecordByTime(user.getId(), Timestamp.valueOf(time.substring(1, time.length() - 1)));
-                if(re > 0) return Response.status(200).build();
-            }
+        User user = userTableRemote.getUserByAccountId(ret.getId());
+        if(user != null) {
+            Long re = recordTableRemote.deleteRecordByTime(user.getId(), Timestamp.valueOf(time.substring(1, time.length() - 1)));
+            if(re > 0) return Response.status(200).build();
         }
         return Response.status(403).build();
     }
@@ -130,20 +119,17 @@ public class homeAPI {
         if(ret == null)
             return Response.status(400).entity("Session timeout!").build();
 
-        if(accountTableRemote.checkAccount(ret)) {
-            Long id = accountTableRemote.getIdByUsernameAndPassword(ret);
-            User user = userTableRemote.getUserByAccountId(id);
-            if(user != null) {
-                Record record = new Record(
-                        raw.getHeart_beat(),
-                        raw.getBlood_pressure(),
-                        raw.getCholesterol(),
-                        raw.getWeight(),
-                        raw.getHeight(),
-                        id);
-                recordTableRemote.addRecord(record);
-                return Response.status(200).build();
-            }
+        User user = userTableRemote.getUserByAccountId(ret.getId());
+        if(user != null) {
+            Record record = new Record(
+                    raw.getHeart_beat(),
+                    raw.getBlood_pressure(),
+                    raw.getCholesterol(),
+                    raw.getWeight(),
+                    raw.getHeight(),
+                    ret.getId());
+            recordTableRemote.addRecord(record);
+            return Response.status(200).build();
         }
         return Response.status(403).build();
     }

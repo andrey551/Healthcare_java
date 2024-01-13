@@ -15,6 +15,7 @@ public interface LocationTableRemote {
     List<RawLocation> getLocs(String type);
 
     List<RawLocation> getLocsVisited(ListId ids, String type);
+
     EntityManager getEntityManager();
     void begin();
     void commit();

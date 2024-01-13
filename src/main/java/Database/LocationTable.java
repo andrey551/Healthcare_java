@@ -30,7 +30,8 @@ public class LocationTable implements LocationTableRemote{
         List<RawLocation> ret = entityManager.createNativeQuery("SELECT (location.name, " +
                         "location.address, location.longtude, " +
                         "location.latitude, location.avatar, " +
-                        "location.from, location.to, location.rating, location.passengers ) " +
+                        "location.from, location.to, location.rating, " +
+                        "location.passengers, location.type ) " +
                         "FROM location " +
                         "WHERE location.type = ?" +
                         "order by cal_distance(location.longitude, location.latitude , ? ,?)")
@@ -46,7 +47,8 @@ public class LocationTable implements LocationTableRemote{
         List<RawLocation> ret = entityManager.createNativeQuery("SELECT (location.name, " +
                         "location.address, location.longtude, " +
                         "location.latitude, location.avatar, " +
-                        "location.from, location.to, location.rating, location.passengers ) " +
+                        "location.from, location.to, location.rating, " +
+                        "location.passengers , location.type) " +
                         "FROM location " +
                         "WHERE location.type = ?")
                 .setParameter(1, type)
@@ -56,11 +58,14 @@ public class LocationTable implements LocationTableRemote{
         return ret;
     }
 
+
+
     public List<RawLocation> getLocsVisited(ListId listId, String type) {
         List<RawLocation> ret = entityManager.createNativeQuery("SELECT (location.name, " +
                         "location.address, location.longtude, " +
                         "location.latitude, location.avatar, " +
-                        "location.from, location.to, location.rating, location.passengers ) " +
+                        "location.from, location.to, location.rating, " +
+                        "location.passengers, location.type ) " +
                         "FROM location " +
                         "WHERE location.type = ? AND location.id IN " +
                         listId.toString())

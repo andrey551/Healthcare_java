@@ -9,6 +9,9 @@ import java.util.List;
 public interface VisitedTableRemote {
 
     List<Long> getListVisited(Long userID) ;
+
+    void add(Long userId, Long locationId);
+    void del(Long userId, Long locationId);
     EntityManager getEntityManager();
     void begin();
     void commit();

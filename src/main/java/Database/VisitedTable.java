@@ -23,6 +23,27 @@ public class VisitedTable implements VisitedTableRemote{
     }
 
     @Override
+    public void add(Long userId, Long locationId) {
+        begin();
+        entityManager.createNativeQuery("INSERT INTO LocationVisited(user_id, location_id) values(?, ?)")
+                .setParameter(1, userId)
+                .setParameter(2, locationId)
+                .executeUpdate();
+
+        commit();
+    }
+
+    @Override
+    public void del(Long userId, Long locationId) {
+        begin();
+        entityManager.createNativeQuery("DELETE FROM LocationVisited where user_id = ? and location_id = ?")
+                .setParameter(1, userId)
+                .setParameter(2, locationId)
+                .executeUpdate();
+        commit();
+    }
+
+    @Override
     public EntityManager getEntityManager() {
         return this.entityManager;
     }

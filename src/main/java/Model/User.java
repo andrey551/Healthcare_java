@@ -31,6 +31,9 @@ public class User implements Serializable {
     @Column(name = "latitude")
     private Float latitude;
 
+    @Column(name = "address")
+    private String address;
+
     public User() {
 
     }
@@ -46,7 +49,8 @@ public class User implements Serializable {
             Long age,
             Long height,
             Float longitude,
-            Float latitude) {
+            Float latitude,
+            String address) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
@@ -54,6 +58,7 @@ public class User implements Serializable {
         this.height = height;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.address = address;
     }
 
     public Long getId() {
@@ -108,6 +113,14 @@ public class User implements Serializable {
 
     public Float getLongitude() {
         return longitude;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     @Override
