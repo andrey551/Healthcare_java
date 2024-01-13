@@ -20,4 +20,8 @@ public class locationAPI {
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN})
+    @Path("/store")
+    public Response getStore(@Context HttpHeaders httpHeaders) {
+        return Response.ok().build();
+    }
 }

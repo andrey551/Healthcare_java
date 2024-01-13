@@ -25,8 +25,11 @@ public class User implements Serializable {
     private Long height;
 
 
-    @Column(name = "location_id")
-    private Long location_id;
+    @Column(name = "longitude")
+    private Float longitude;
+
+    @Column(name = "latitude")
+    private Float latitude;
 
     public User() {
 
@@ -42,13 +45,15 @@ public class User implements Serializable {
             String avatar,
             Long age,
             Long height,
-            Long address_id) {
+            Float longitude,
+            Float latitude) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
         this.age = age;
         this.height = height;
-        this.location_id = address_id;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public Long getId() {
@@ -67,9 +72,6 @@ public class User implements Serializable {
         this.age = age;
     }
 
-    public void setLocation_id(Long location_id) {
-        this.location_id = location_id;
-    }
 
     public String getName() {
         return name;
@@ -83,9 +85,6 @@ public class User implements Serializable {
         return age;
     }
 
-    public Long getLocation_id() {
-        return location_id;
-    }
 
     public String getAvatar() {
         return avatar;
@@ -95,6 +94,22 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
+    public void setLatitude(Float latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(Float longitude) {
+        this.longitude = longitude;
+    }
+
+    public Float getLatitude() {
+        return latitude;
+    }
+
+    public Float getLongitude() {
+        return longitude;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -102,7 +117,6 @@ public class User implements Serializable {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", height=" + height +
-                ", address_id=" + location_id +
                 '}';
     }
 }

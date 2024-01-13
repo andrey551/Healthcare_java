@@ -1,10 +1,14 @@
 package Database;
 
+import Raw.ListId;
+import Raw.RawLocation;
 import jakarta.ejb.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import Model.Location;
+
+import java.util.List;
 
 @Singleton
 public class LocationTable implements LocationTableRemote{
@@ -17,6 +21,53 @@ public class LocationTable implements LocationTableRemote{
                 .setParameter(1, id)
                 .getResultList().get(0);
         commit();
+        return ret;
+    }
+
+    @Override
+    public List<RawLocation> searchLocationsByDistance(Float lon, Float lat, String type) {
+        begin();
+        List<RawLocation> ret = entityManager.createNativeQuery("SELECT (location.name, " +
+                        "location.address, location.longtude, " +
+                        "location.latitude, location.avatar, " +
+                        "location.from, location.to, location.rating, location.passengers ) " +
+                        "FROM location " +
+                        "WHERE location.type = ?" +
+                        "order by cal_distance(location.longitude, location.latitude , ? ,?)")
+                .setParameter(1, type)
+                .setParameter(2, lon)
+                .setParameter(3, lat)
+                .getResultList();
+        commit();
+        return ret;
+    }
+    public List<RawLocation> getLocs(String type) {
+        begin();
+        List<RawLocation> ret = entityManager.createNativeQuery("SELECT (location.name, " +
+                        "location.address, location.longtude, " +
+                        "location.latitude, location.avatar, " +
+                        "location.from, location.to, location.rating, location.passengers ) " +
+                        "FROM location " +
+                        "WHERE location.type = ?")
+                .setParameter(1, type)
+                .getResultList();
+        commit();
+
+        return ret;
+    }
+
+    public List<RawLocation> getLocsVisited(ListId listId, String type) {
+        List<RawLocation> ret = entityManager.createNativeQuery("SELECT (location.name, " +
+                        "location.address, location.longtude, " +
+                        "location.latitude, location.avatar, " +
+                        "location.from, location.to, location.rating, location.passengers ) " +
+                        "FROM location " +
+                        "WHERE location.type = ? AND location.id IN " +
+                        listId.toString())
+                .setParameter(1, type)
+                .getResultList();
+        commit();
+
         return ret;
     }
 

@@ -19,19 +19,19 @@ public class Comment implements Serializable {
     @Column(name = "user_id")
     private Long user_id;
 
-    @Column(name = "hospital_id")
-    private Long hospital_id;
+    @Column(name = "location_id")
+    private Long location_id;
 
     @Column(name = "content")
     private String content;
 
     public Comment(Time time,
                    Long user_id,
-                   Long hospital_id,
+                   Long location_id,
                    String content) {
         this.time = time;
         this.user_id = user_id;
-        this.hospital_id = hospital_id;
+        this.location_id = location_id;
         this.content = content;
     }
 
@@ -47,9 +47,6 @@ public class Comment implements Serializable {
         return id;
     }
 
-    public void setHospital_id(Long hospital_id) {
-        this.hospital_id = hospital_id;
-    }
 
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
@@ -61,10 +58,6 @@ public class Comment implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Long getHospital_id() {
-        return hospital_id;
     }
 
     public Time getTime() {
@@ -79,13 +72,21 @@ public class Comment implements Serializable {
         return content;
     }
 
+    public Long getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(Long location_id) {
+        this.location_id = location_id;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", time=" + time +
                 ", user_id=" + user_id +
-                ", hospital_id=" + hospital_id +
+                ", location_id=" + location_id +
                 ", content='" + content + '\'' +
                 '}';
     }

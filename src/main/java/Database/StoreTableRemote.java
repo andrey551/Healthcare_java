@@ -1,17 +1,19 @@
 package Database;
 
 import Model.Location;
-import Model.Store;
-import Raw.RawLocationReq;
+import Raw.ListId;
+import Raw.RawLocation;
 import jakarta.ejb.Local;
 import jakarta.persistence.EntityManager;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Local
 public interface StoreTableRemote {
-    List<Store> searchStoresByDistance(Location location);
+    List<RawLocation> searchStoresByDistance(Location location);
+    List<RawLocation> getStores();
+
+    List<RawLocation> getStoresVisited(ListId ids);
     EntityManager getEntityManager();
     void begin();
     void commit();

@@ -28,7 +28,11 @@ public class Doctor implements Serializable {
     @Column(name = "education_id")
     private Long education_id;
 
-    public Doctor(String name, Long age, Long info_id, Long prize_id, Long education_id) {
+    public Doctor(String name,
+                  Long age,
+                  Long info_id,
+                  Long prize_id,
+                  Long education_id) {
         this.name = name;
         this.age = age;
         this.info_id = info_id;

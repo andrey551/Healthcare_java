@@ -4,7 +4,6 @@ import jakarta.ejb.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import Model.Hospital;
 
 import java.util.List;
 

@@ -6,10 +6,9 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 
 @Local
-public interface HospitalTableRemote {
-    Hospital getHospitalByName(String name);
-    Hospital getHospitalByLocationId(Long location_id);
-    List<Hospital> getHospitalInOrderRating();
+public interface VisitedTableRemote {
+
+    List<Long> getListVisited(Long userID) ;
     EntityManager getEntityManager();
     void begin();
     void commit();
