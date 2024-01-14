@@ -16,30 +16,29 @@ public class AccountTable implements AccountTableRemote{
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tad");
     EntityManager entityManager = entityManagerFactory.createEntityManager();
     @Override
-    public boolean checkAccount(RawAccount rawAccount) {
-        System.out.println(rawAccount.toString());
+    public Long checkAccount(String username, String password) {
         begin();
-        List ret =  entityManager.createQuery("SELECT a FROM Account a WHERE a.username = ?1 AND a.password= ?2")
-                .setParameter(1, rawAccount.getUsername())
-                .setParameter(2, rawAccount.getPassword())
+        List<Account> ret = (List<Account>) entityManager.createQuery("SELECT a FROM Account a WHERE a.username = ?1 AND a.password= ?2")
+                .setParameter(1, username)
+                .setParameter(2, password)
                 .getResultList();
         commit();
-
-        System.out.println(ret.toString());
-        return !ret.isEmpty();
+        if(ret.isEmpty()) return null;
+        return ret.get(0).getId();
     }
 
     @Override
-    public long addAccount(RawAccount account) {
+    public Long addAccount(RawAccount account) {
         begin();
-        long ret = entityManager.createNativeQuery("insert into account (username, password)  values ( ?, ?)")
+        entityManager.createNativeQuery("insert into account (username, password)  values ( ?, ?)")
 
                 .setParameter(1, account.getUsername())
                 .setParameter(2, account.getPassword())
                 .executeUpdate();
         commit();
-
-        return ret;
+        List<Account> temp = entityManager.createNativeQuery("select id from account limit 1", Account.class).getResultList();
+        commit();
+        return temp.isEmpty()?null: temp.get(0).getId();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package API;
 
+import Database.LocationTable;
 import Database.LocationTableRemote;
 import Database.UserTableRemote;
 import Database.VisitedTableRemote;
@@ -27,8 +28,6 @@ public class locationAPI {
     @EJB
     LocationTableRemote locationTableRemote ;
 
-    @EJB
-    VisitedTableRemote storeTableRemote;
 
     @EJB
     UserTableRemote userTableRemote;
@@ -47,8 +46,8 @@ public class locationAPI {
             return Response.status(400).entity("Session timeout!").build();
         User user = userTableRemote.getUserByAccountId(ret.getId());
         if(user != null) {
-            List<RawLocation> list = locationTableRemote.getLocs(req.getType());
-
+            List<Location> list = locationTableRemote.getLocs(req.getType());
+            System.out.println(list.toString());
             return Response.status(200).entity(locationsJson(list)).build();
         }
         return Response.status(403).build();

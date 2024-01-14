@@ -123,4 +123,20 @@ public class RawLocation {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "RawLocation{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", open=" + open +
+                ", close=" + close +
+                ", rating=" + rating +
+                ", passengers=" + passengers +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

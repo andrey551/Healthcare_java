@@ -12,7 +12,7 @@ import java.util.List;
 public interface LocationTableRemote {
     Location getLocationById(Long id);
     List<RawLocation> searchLocationsByDistance(Float lon, Float lat, String type);
-    List<RawLocation> getLocs(String type);
+    List<Location> getLocs(String type);
 
     List<RawLocation> getLocsVisited(ListId ids, String type);
 

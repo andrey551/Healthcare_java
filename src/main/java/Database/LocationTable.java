@@ -28,7 +28,7 @@ public class LocationTable implements LocationTableRemote{
     public List<RawLocation> searchLocationsByDistance(Float lon, Float lat, String type) {
         begin();
         List<RawLocation> ret = entityManager.createNativeQuery("SELECT (location.name, " +
-                        "location.address, location.longtude, " +
+                        "location.address, location.longitude, " +
                         "location.latitude, location.avatar, " +
                         "location.from, location.to, location.rating, " +
                         "location.passengers, location.type ) " +
@@ -42,15 +42,9 @@ public class LocationTable implements LocationTableRemote{
         commit();
         return ret;
     }
-    public List<RawLocation> getLocs(String type) {
+    public List<Location> getLocs(String type) {
         begin();
-        List<RawLocation> ret = entityManager.createNativeQuery("SELECT (location.name, " +
-                        "location.address, location.longtude, " +
-                        "location.latitude, location.avatar, " +
-                        "location.from, location.to, location.rating, " +
-                        "location.passengers , location.type) " +
-                        "FROM location " +
-                        "WHERE location.type = ?")
+        List<Location> ret = (List<Location> )entityManager.createQuery("SELECT a from Location a WHERE a.type = ?1")
                 .setParameter(1, type)
                 .getResultList();
         commit();
@@ -62,7 +56,7 @@ public class LocationTable implements LocationTableRemote{
 
     public List<RawLocation> getLocsVisited(ListId listId, String type) {
         List<RawLocation> ret = entityManager.createNativeQuery("SELECT (location.name, " +
-                        "location.address, location.longtude, " +
+                        "location.address, location.longitude, " +
                         "location.latitude, location.avatar, " +
                         "location.from, location.to, location.rating, " +
                         "location.passengers, location.type ) " +

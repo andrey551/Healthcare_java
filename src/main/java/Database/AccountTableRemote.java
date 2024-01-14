@@ -7,8 +7,8 @@ import Raw.RawAccount;
 
 @Local
 public interface AccountTableRemote {
-    boolean checkAccount(RawAccount rawAccount);
-    long addAccount(RawAccount account);
+    Long checkAccount(String username, String password);
+    Long addAccount(RawAccount account);
     Long getIdByUsernameAndPassword(RawAccount account);
 
     long updatePassword(Account account, String newPassword);

@@ -60,9 +60,14 @@ public class JSONBuilder {
     public static RawAccount accountParser(String json) {
         JsonReader reader = Json.createReader(new StringReader(json));
         JsonObject obj = reader.readObject();
+        Long id = null;
+        if(obj.containsKey("id")) {
+            id = Long.valueOf(obj.getString("id"));
+        }
 
         return new RawAccount(obj.getString("username"),
-                obj.getString("password"), Long.valueOf(obj.getString("id")));
+                obj.getString("password"),
+                id);
     }
 
     public static String UserJson(User user) {
@@ -100,24 +105,27 @@ public class JSONBuilder {
 
     }
 
-    public static JsonObject locationJson(RawLocation raw) {
-        return Json.createObjectBuilder()
+    public static JsonObject locationJson(Location raw) {
+        JsonObject ret = Json.createObjectBuilder()
                 .add("name", raw.getName())
                 .add("address", raw.getAddress())
                 .add("avatar", raw.getAvatar())
                 .add("longitude", raw.getLongitude())
                 .add("latitude", raw.getLatitude())
-                .add("open", raw.getOpen().toString())
-                .add("close", raw.getClose().toString())
+                .add("open", raw.getFrom().toString())
+                .add("close", raw.getTo().toString())
                 .add("rating", raw.getRating())
                 .add("passengers", raw.getPassengers())
                 .add("type", raw.getType())
                 .build();
+        System.out.println(ret.toString());
+        return ret;
     }
 
-    public static String locationsJson(List<RawLocation> raws) {
+    public static String locationsJson(List<Location> raws) {
         JsonArrayBuilder ret = Json.createArrayBuilder();
-        for(RawLocation i : raws) {
+
+        for(Location i : raws) {
             ret.add(locationJson(i));
         }
 

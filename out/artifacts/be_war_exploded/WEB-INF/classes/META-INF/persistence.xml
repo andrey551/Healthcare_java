@@ -10,6 +10,7 @@
         <class>Model.User</class>
         <class>Model.Record</class>
         <class>Model.Location</class>
+        <class>Raw.RawLocation</class>
         <properties>
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />

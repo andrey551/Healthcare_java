@@ -21,9 +21,9 @@ public class accountAPI {
     @Path("/login")
     public Response auth(String UserJson) {
         RawAccount rawAccount = JSONBuilder.accountParser(UserJson);
-        System.out.println(rawAccount.toString());
-        if(accountTableRemote.checkAccount(rawAccount)) {
-            String jwt = jwtHandler.createJWT(rawAccount);
+        Long id = accountTableRemote.checkAccount(rawAccount.getUsername(), rawAccount.getPassword());
+        if(id != null) {
+            String jwt = jwtHandler.createJWT(rawAccount, id);
             return Response.status(200).entity(jwt).build();
         }
 
@@ -37,8 +37,9 @@ public class accountAPI {
         RawAccount ret = jwtHandler.verify(jwtString);
         if(ret == null)
             return Response.status(400).entity("Session timeout!").build();
-        if(accountTableRemote.checkAccount(ret)) {
-            String jwt = jwtHandler.createJWT(ret);
+        Long id = accountTableRemote.checkAccount(ret.getUsername(), ret.getPassword());
+        if(id != null) {
+            String jwt = jwtHandler.createJWT(ret, id);
             return Response.status(200).entity(jwt).build();
         }
         return Response.status(403).build();
@@ -56,8 +57,9 @@ public class accountAPI {
             return Response.status(406).build();
         }
 
-        if(accountTableRemote.addAccount(rawAccount) != -1) {
-            String jwt = jwtHandler.createJWT(rawAccount);
+        Long id = accountTableRemote.addAccount(rawAccount);
+        if(id != null) {
+            String jwt = jwtHandler.createJWT(rawAccount, id);
             return Response.status(200).entity(jwt).build();
         }
 
