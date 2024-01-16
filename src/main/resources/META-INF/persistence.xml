@@ -10,7 +10,23 @@
         <class>Model.User</class>
         <class>Model.Record</class>
         <class>Model.Location</class>
+        <class>Model.Specialization</class>
+        <class>Model.HospSpec</class>
+        <class>Model.Wallet</class>
+        <class>Model.Comment</class>
+        <class>Model.Chat</class>
+        <class>Model.Consultant</class>
         <class>Raw.RawLocation</class>
+        <class>Model.Doctor</class>
+        <class>Model.Education</class>
+        <class>Model.Education</class>
+        <class>Model.Info</class>
+        <class>Model.Message</class>
+        <class>Model.Prize</class>
+        <class>Model.CurrencyUnit</class>
+        <class>Raw.RawComment</class>
+        <class>Raw.coordinate</class>
+        <class>Raw.WrapComment</class>
         <properties>
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />

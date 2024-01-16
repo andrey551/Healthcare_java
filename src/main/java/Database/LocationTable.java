@@ -2,6 +2,7 @@ package Database;
 
 import Raw.ListId;
 import Raw.RawLocation;
+import Raw.coordinate;
 import jakarta.ejb.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -52,6 +53,16 @@ public class LocationTable implements LocationTableRemote{
         return ret;
     }
 
+    @Override
+    public Long getIdByCoordinate(coordinate coor) {
+        begin();
+        List<Location> ret = (List<Location>) entityManager.createQuery("select a from Location a where a.longitude = ?1 and a.latitude = ?2")
+                .setParameter(1, coor.getLongitude())
+                .setParameter(2, coor.getLatitude())
+                .getResultList();
+        if(ret.isEmpty()) return null;
+        return ret.get(0).getId();
+    }
 
 
     public List<RawLocation> getLocsVisited(ListId listId, String type) {

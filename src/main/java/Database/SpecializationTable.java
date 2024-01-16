@@ -6,6 +6,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import Model.Specialization;
 
+import java.util.List;
+
 @Singleton
 public class SpecializationTable implements SpecializationTableRemote{
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tad");
@@ -18,6 +20,17 @@ public class SpecializationTable implements SpecializationTableRemote{
                 .getResultList().get(0);
         commit();
 
+        return ret;
+    }
+
+    @Override
+    public List<Specialization> getSpecializationsByHospitalId(Long id) {
+        begin();
+        List<Specialization> ret = (List<Specialization>) entityManager
+                .createQuery("SELECT new Specialization(a.name, a.description) from Specialization a inner join HospSpec b on a.id = b.spec_id where b.hosp_id = ?1")
+                .setParameter(1, id)
+                .getResultList();
+        commit();
         return ret;
     }
 

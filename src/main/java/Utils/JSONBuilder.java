@@ -1,8 +1,7 @@
 package Utils;
 
-import Model.Location;
+import Model.*;
 import Model.Record;
-import Model.User;
 import Raw.*;
 import jakarta.json.*;
 import jakarta.json.stream.JsonParsingException;
@@ -100,7 +99,6 @@ public class JSONBuilder {
         for(Record i : records) {
             ret.add(recordJson(i));
         }
-
         return ret.build().toString();
 
     }
@@ -127,6 +125,40 @@ public class JSONBuilder {
 
         for(Location i : raws) {
             ret.add(locationJson(i));
+        }
+
+        return ret.build().toString();
+    }
+
+    public static JsonObject commentJson(RawComment comment) {
+        return Json.createObjectBuilder()
+                .add("name", comment.getName())
+                .add("avatar", comment.getAvatar())
+                .add("time", comment.getTime().toString())
+                .add("content", comment.getContent())
+                .add("rate", comment.getRate())
+                .build();
+    }
+
+    public static String commentsJson(List<RawComment> comments) {
+        JsonArrayBuilder ret = Json.createArrayBuilder();
+        for(RawComment i : comments) {
+            ret.add(commentJson(i));
+        }
+
+        return ret.build().toString();
+    }
+    public static JsonObject SpecJson(Specialization spec) {
+        return Json.createObjectBuilder()
+                .add("name", spec.getName())
+                .add("description", spec.getDescription())
+                .build();
+    }
+
+    public static String SpecsJson(List<Specialization> list) {
+        JsonArrayBuilder ret = Json.createArrayBuilder();
+        for(Specialization i : list) {
+            ret.add(SpecJson(i));
         }
 
         return ret.build().toString();

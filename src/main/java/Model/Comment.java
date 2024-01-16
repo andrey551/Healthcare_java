@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "comment")
@@ -14,7 +15,7 @@ public class Comment implements Serializable {
     private Long id;
 
     @Column(name = "time")
-    private Time time;
+    private Timestamp time;
 
     @Column(name = "user_id")
     private Long user_id;
@@ -25,14 +26,24 @@ public class Comment implements Serializable {
     @Column(name = "content")
     private String content;
 
-    public Comment(Time time,
+    @Column(name = "rating")
+    private Long rating;
+
+    public Comment(Timestamp time,
                    Long user_id,
                    Long location_id,
-                   String content) {
+                   String content,
+                   Long rating) {
         this.time = time;
         this.user_id = user_id;
         this.location_id = location_id;
         this.content = content;
+        this.rating = rating;
+    }
+
+    public Comment(String content, Long rating) {
+        this.content = content;
+        this.rating = rating;
     }
 
     public Comment() {
@@ -52,7 +63,7 @@ public class Comment implements Serializable {
         this.user_id = user_id;
     }
 
-    public void setTime(Time time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 
@@ -60,7 +71,7 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    public Time getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
@@ -80,6 +91,14 @@ public class Comment implements Serializable {
         this.location_id = location_id;
     }
 
+    public void setRating(Long rating) {
+        this.rating = rating;
+    }
+
+    public Long getRating() {
+        return rating;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -88,6 +107,7 @@ public class Comment implements Serializable {
                 ", user_id=" + user_id +
                 ", location_id=" + location_id +
                 ", content='" + content + '\'' +
+                ", rating=" + rating +
                 '}';
     }
 }
